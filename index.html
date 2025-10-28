@@ -25,33 +25,80 @@
       width: 90%;
       margin: 3rem 0;
     }
-    h1 { text-align: center; font-size: 1.8rem; color: #2C3345; }
-    h2 { font-size: 1.1rem; color: #555; text-align: center; margin-top: -0.5rem; font-weight: 400; }
-    label { font-weight: 600; margin-top: 1rem; display: block; color: #2C3345; }
-    input, textarea, select { width: 100%; padding: 0.7rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 8px; font-size: 1rem; font-family: inherit; box-sizing: border-box; }
-    textarea { resize: vertical; }
-    button { background-color: #1e40af; color: white; padding: 0.9rem 1.5rem; border: none; border-radius: 10px; cursor: pointer; font-size: 1rem; font-weight: 600; width: 100%; margin-top: 1.5rem; transition: background-color 0.3s; }
-    button:hover { background-color: #1d4ed8; }
-    .img-wrapper { text-align: center; margin: 1rem 0; }
-    .img-wrapper img { width: 120%; max-width: 400px; border-radius: 10px; }
-    .hidden-field { display: none !important; } /* Honeypot invisible */
+    h1 {
+      text-align: center;
+      font-size: 1.8rem;
+      color: #2C3345;
+    }
+    h2 {
+      font-size: 1.1rem;
+      color: #555;
+      text-align: center;
+      margin-top: -0.5rem;
+      font-weight: 400;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 1rem;
+      display: block;
+      color: #2C3345;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      background-color: #1e40af;
+      color: white;
+      padding: 0.9rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      width: 100%;
+      margin-top: 1.5rem;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    .img-wrapper {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    .img-wrapper img {
+      width: 120%;
+      max-width: 400px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <form action="https://script.google.com/macros/s/AKfycbzTyuqcGKJ2b4faO0l6ZraWqe9_P_fIu39gfcvwAyshdK_IsJAA2SI7kZCMnkcVTN1v/exec" method="POST">
+  <form id="CommandForm" action="https://script.google.com/macros/s/AKfycbzaNIG-mwHraS8vL96_SEEI1EPoIym9laMyCC0vlmAtQqZgArARpomYCEB4hv2c1d37/exec" method="POST">
     <h1>Commandez mon livre</h1>
     <h2>(disponible à partir du 12/12/2025)</h2>
 
     <div class="img-wrapper">
-      <img src="https://raw.githubusercontent.com/DelhezIsa/Mon-livre/main/couverture.png" alt="Couverture du livre">
+      <img src="https://raw.githubusercontent.com/DELHEZISA/Mon-livre/main/couverture.png" alt="Couverture du livre">
     </div>
 
     <p><strong>Voici la marche à suivre :</strong></p>
     <ol>
       <li>Remplir le formulaire ci-dessous et cliquer sur « Passer la commande ».</li>
-      <li>Effectuer le paiement sur le compte <strong>BE53 0689 0960 0753</strong> au nom de <strong>Isabelle DELHEZ</strong>.</li>
-      <li>Si vous venez chercher la commande, contactez le <strong>+32 496 81 11 03</strong>.</li>
+      <li>Effectuer le paiement sur le compte <strong>BE53 0689 0960 0753</strong> au nom de <strong>Isabelle DELHEZ</strong>, avec comme communication <strong>Livre + vos nom & prénom</strong>.</li>
+      <li>Si vous venez chercher la commande, contactez le <strong>+32 496 81 11 03</strong> pour convenir d’un moment à l’adresse : <em>27, rue des Imprimeurs – 4801 Stembert</em>.</li>
+      <li>Si vous avez demandé une expédition, nous vous l’enverrons par la poste.</li>
     </ol>
 
     <label for="nom">Votre nom *</label>
@@ -69,30 +116,36 @@
     <label for="quantite">Quelle quantité souhaitez-vous commander ? *</label>
     <input type="number" id="quantite" name="Quantité" required>
 
-    <label for="livraison">Mode de réception *</label>
+    <label for="livraison">Viendrez-vous chercher la commande ou devons-nous l’expédier ? *</label>
     <select id="livraison" name="Mode de réception" required>
       <option value="">-- Choisissez une option --</option>
-      <option value="Je viendrai chercher la commande">Je viendrai chercher la commande</option>
-      <option value="Expédition demandée">Expédiez ma commande</option>
+      <option value="Je viendrai chercher la commande">Je viendrai chercher la commande (certaines pourront être déposées par nos soins)</option>
+      <option value="Expédition demandée">Expédiez ma commande à l’adresse ci-dessous (des frais de port seront ajoutés)</option>
     </select>
 
-    <label for="adresse">Nom et adresse d’expédition (si applicable)</label>
+    <label for="adresse">Nom et Adresse d’expédition (si applicable)</label>
     <textarea id="adresse" name="Adresse" rows="3" placeholder="Rue, n°, Code postal, Localité"></textarea>
 
     <label for="infos">Informations complémentaires</label>
     <textarea id="infos" name="Informations complémentaires" rows="4"></textarea>
 
-<label style="display: inline-flex; align-items: center; white-space: nowrap;">
-      J’accepte les termes et conditions <span style="margin-right: 5px;">
-      <input type="checkbox" name="Confirmation" value="J'accepte les termes et conditions" required>
+    <p><strong>Quel montant devez-vous verser ?</strong></p>
+    <ul>
+      <li>Prix du livre : <strong>29,99 €</strong></li>
+      <li>Expédition en Belgique :  
+        1–3 livres : 6,85 € — 4–7 livres : 7,50 € — 8–14 livres : 8,30 €</li>
+      <li>Expédition en France :  
+        1–3 livres : 16,50 € — 4–7 livres : 16,50 € — 8–14 livres : 16,50 €</li>
+    </ul>
+
+    <label style="display: inline-flex; align-items: center; white-space: nowrap;">
+      J’accepte les termes et conditions  <span style="margin-right: 5px;">
+      <input type="checkbox" name="Confirmation" value="J'accepte les termes et conditions" required style="margin-left:8px;">
     </label>
 
-    <!-- Honeypot anti-spam -->
-    <input type="text" name="website" class="hidden-field" tabindex="-1" autocomplete="off">
-
     <button type="submit">Passer la commande</button>
-
   </form>
+
   <script>
   const form = document.getElementById('CommandForm');
 
@@ -117,5 +170,6 @@
     });
   });
   </script>
+
 </body>
 </html>
