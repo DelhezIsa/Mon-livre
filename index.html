@@ -120,7 +120,7 @@
     <select id="livraison" name="Mode de réception" required>
       <option value="">-- Choisissez une option --</option>
       <option value="Je viendrai chercher la commande">Je viendrai chercher la commande (certaines pourront être déposées par nos soins)</option>
-      <option value="Expédition demandée">Expédiez ma commande à l’adresse ci-dessous (des frais de port seront ajoutés)</option>
+      <option value="Expédiez ma commande">Expédiez ma commande à l’adresse ci-dessous (des frais de port seront ajoutés)</option>
     </select>
 
     <label for="adresse">Nom et Adresse d’expédition (si applicable) OU Adresse d'un point-relais Bpost</label>
@@ -142,32 +142,38 @@
 	<input type="hidden" name="feuille" value="Commandes">
 	<input type="hidden" name="debug" value="true">
 
-    <button type="submit">Passer la commande</button>
+    <button type="submit" id="submitButton">Passer la commande</button>
   </form>
 
   <script>
-  const form = document.getElementById('CommandForm');
+    const form = document.getElementById('CommandForm');
+    const submitButton = document.getElementById('submitButton');
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const data = new FormData(form);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();  // Empêche l'envoi par défaut du formulaire
 
-    fetch(form.action, {
-      method: 'POST',
-      body: data
-    })
-    .then(res => res.text())
-    .then(text => {
-      if (text.includes('success')) {
-        window.location.href = 'https://delhezisa.github.io/Mon-livre/merci.html';
-      } else {
-        alert('Une erreur est survenue. Réessayez plus tard.');
-      }
-    })
-    .catch(err => {
-      alert('Erreur réseau : ' + err.message);
+      // Désactivation du bouton pour éviter un double clic
+      submitButton.disabled = true;  // Désactive le bouton
+      submitButton.innerText = "Commande en cours...";  // Change le texte du bouton
+
+      const data = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: data
+      })
+      .then(res => res.text())
+      .then(text => {
+        if (text.includes('success')) {
+          window.location.href = 'https://delhezisa.github.io/Mon-livre/merci.html';
+        } else {
+          alert('Une erreur est survenue. Réessayez plus tard.');
+        }
+      })
+      .catch(err => {
+        alert('Erreur réseau : ' + err.message);
+      });
     });
-  });
   </script>
 
 </body>
