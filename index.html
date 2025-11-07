@@ -57,6 +57,19 @@
     .img-wrapper img { width: 120%; max-width: 400px; border-radius: 10px; }
     ol { margin-left: 1rem; }
     ul { margin-left: 1rem; }
+	.btn-relay {
+	  width: 1.5rem;       /* largeur fixe */
+	  height: 1.5rem;      /* hauteur fixe */
+	  padding: 0;           /* aucun padding */
+	  font-size: 0.9rem;    /* petit texte / emoji */
+	  line-height: 1;        /* compacte verticalement */
+	  vertical-align: middle; /* <-- clé pour aligner sur le texte */
+	  text-align: center;
+	  cursor: pointer;
+	  position: relative;
+	  top: -10px; /* <- remonte le bouton de 2 pixels */
+	}
+
   </style>
 </head>
 <body>
@@ -100,8 +113,14 @@
       <option value="Expédiez ma commande">Expédiez ma commande</option>
     </select>
 
-    <label for="adresse">Adresse d'un Point Relais Mondial Relay (si expédition demandée)</label>
-    <textarea id="adresse" name="Adresse" rows="3" placeholder="Rue, n°, Code postal, Localité"></textarea>
+	<label for="adresse" style="display:flex; align-items:center; gap:5px;">
+	  Adresse d'un Point Relais Mondial Relay (cliquer pour le chercher ->)
+	  <button type="button" class="btn-relay" 
+			  onclick="window.open('https://www.mondialrelay.be/fr-be/trouver-le-point-relais-le-plus-proche-de-chez-moi/', '_blank')">
+		🔍
+	  </button>
+	</label>
+	<textarea id="adresse" name="Adresse" rows="3" placeholder="Rue, n°, Code postal, Localité"></textarea>
 
     <label for="infos">Informations complémentaires</label>
     <textarea id="infos" name="Informations complémentaires" rows="4"></textarea>
