@@ -55,17 +55,28 @@
     button:hover { background-color: #1d4ed8; }
     .img-wrapper { text-align: center; margin: 1rem 0; }
     .img-wrapper img { width: 120%; max-width: 400px; border-radius: 10px; }
+    ol { margin-left: 1rem; }
+    ul { margin-left: 1rem; }
   </style>
 </head>
 <body>
 
-  <form id="CommandForm" action="https://script.google.com/macros/s/AKfycbzDVZrL34ks_Wx_Ftp3Xt6Z7EkLBezhAtfV48N3ym9z9pyHdcOQkLLcKwworQH7VPCS/exec" method="POST">
+  <form id="CommandForm" action="https://script.google.com/macros/s/AKfycbz2ROdx57HEN4sLsY_FW2WzCm_X6qJaQhNQWRJm7Jh9OwN0KP-BmujHimFLNHr3bJis/exec" method="POST">
     <h1>Commandez mon livre</h1>
     <h2>(disponible à partir du 12/12/2025)</h2>
 
     <div class="img-wrapper">
       <img src="https://raw.githubusercontent.com/DELHEZISA/Mon-livre/main/4ème.jpg" alt="Couverture du livre">
     </div>
+
+    <!-- Instructions -->
+    <p><strong>Voici la marche à suivre :</strong></p>
+    <ol>
+      <li>Remplir le formulaire ci-dessous et cliquer sur « Passer la commande ».</li>
+      <li>Effectuer le paiement sur le compte <strong>BE53 0689 0960 0753</strong> au nom de <strong>Isabelle DELHEZ</strong>, avec comme communication <strong>Livre (quantité) + vos nom & prénom</strong>.</li>
+      <li>Si vous venez chercher la commande, contactez le <strong>+32 496 81 11 03</strong> pour convenir d’un moment à l’adresse : <em>27, rue des Imprimeurs – 4801 Stembert</em>.</li>
+      <li>Si vous avez demandé une expédition, nous vous l’enverrons par la poste.</li>
+    </ol>
 
     <label for="nom">Votre nom *</label>
     <input type="text" id="nom" name="Nom" required>
@@ -95,6 +106,14 @@
     <label for="infos">Informations complémentaires</label>
     <textarea id="infos" name="Informations complémentaires" rows="4"></textarea>
 
+    <!-- Tarifs -->
+    <p><strong>Quel montant devez-vous verser ?</strong></p>
+    <ul>
+      <li>Prix du livre : <strong>28 €</strong></li>
+      <li>Expédition en Belgique : 1–3 livres : <strong>4,25 €</strong></li>
+      <li>Expédition en France : 1–3 livres : <strong>7 €</strong></li>
+    </ul>
+
     <!-- Champs cachés pour GAS -->
     <input type="hidden" name="feuille" value="Commandes">
     <input type="hidden" name="debug" value="true">
@@ -102,12 +121,13 @@
     <button type="submit" id="submitButton">Passer la commande</button>
   </form>
 
+  <!-- Script fetch pour soumission et redirection -->
   <script>
     const form = document.getElementById('CommandForm');
     const submitButton = document.getElementById('submitButton');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Empêche la soumission normale
+      e.preventDefault();
       submitButton.disabled = true;
       submitButton.innerText = "Commande en cours...";
 
