@@ -59,25 +59,13 @@
 </head>
 <body>
 
-  <form id="CommandForm" 
-        action="https://script.google.com/macros/s/AKfycbxUofA-O-egIHNm_yspCovCRyJm9H9fB9cGDsiVRfjQWrxiUYKVMgcdz9nWDyxmlUy8/exec" 
-        method="POST" 
-        target="hidden_iframe">
-
+  <form id="CommandForm" action="https://script.google.com/macros/s/AKfycbzDVZrL34ks_Wx_Ftp3Xt6Z7EkLBezhAtfV48N3ym9z9pyHdcOQkLLcKwworQH7VPCS/exec" method="POST">
     <h1>Commandez mon livre</h1>
     <h2>(disponible à partir du 12/12/2025)</h2>
 
     <div class="img-wrapper">
       <img src="https://raw.githubusercontent.com/DELHEZISA/Mon-livre/main/4ème.jpg" alt="Couverture du livre">
     </div>
-
-    <p><strong>Voici la marche à suivre :</strong></p>
-    <ol>
-      <li>Remplir le formulaire ci-dessous et cliquer sur « Passer la commande ».</li>
-      <li>Effectuer le paiement sur le compte <strong>BE53 0689 0960 0753</strong> au nom de <strong>Isabelle DELHEZ</strong>, avec comme communication <strong>Livre (quantité) + vos nom & prénom</strong>.</li>
-      <li>Si vous venez chercher la commande, contactez le <strong>+32 496 81 11 03</strong> pour convenir d’un moment à l’adresse : <em>27, rue des Imprimeurs – 4801 Stembert</em>.</li>
-      <li>Si vous avez demandé une expédition, nous vous l’enverrons par la poste.</li>
-    </ol>
 
     <label for="nom">Votre nom *</label>
     <input type="text" id="nom" name="Nom" required>
@@ -107,38 +95,41 @@
     <label for="infos">Informations complémentaires</label>
     <textarea id="infos" name="Informations complémentaires" rows="4"></textarea>
 
-    <p><strong>Quel montant devez-vous verser ?</strong></p>
-    <ul>
-      <li>Prix du livre : <strong>28 €</strong></li>
-      <li>Expédition en Belgique : 1–3 livres : 4,25€</li>
-      <li>Expédition en France : 1–3 livres : ?? €</li>
-    </ul>
-
-    <!-- Champs cachés -->
+    <!-- Champs cachés pour GAS -->
     <input type="hidden" name="feuille" value="Commandes">
     <input type="hidden" name="debug" value="true">
 
-    <button type="submit">Passer la commande</button>
+    <button type="submit" id="submitButton">Passer la commande</button>
   </form>
 
-  <!-- iframe caché pour soumission sans rechargement -->
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
-
   <script>
-    // Redirection vers "merci" après soumission
     const form = document.getElementById('CommandForm');
-    const iframe = document.querySelector('iframe[name="hidden_iframe"]');
-    iframe.onload = function() {
-      // Vérifie si la réponse contient 'success'
-      try {
-        const bodyText = iframe.contentDocument.body.innerText;
-        if (bodyText.includes('success')) {
+    const submitButton = document.getElementById('submitButton');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // Empêche la soumission normale
+      submitButton.disabled = true;
+      submitButton.innerText = "Commande en cours...";
+
+      const data = new FormData(form);
+
+      fetch(form.action, { method: 'POST', body: data })
+      .then(res => res.text())
+      .then(text => {
+        if (text.includes('success')) {
           window.location.href = 'https://delhezisa.github.io/Mon-livre/merci.html';
+        } else {
+          alert('Une erreur est survenue. Réessayez plus tard.');
+          submitButton.disabled = false;
+          submitButton.innerText = "Passer la commande";
         }
-      } catch(e) {
-        console.log(e);
-      }
-    };
+      })
+      .catch(err => {
+        alert('Erreur réseau : ' + err.message);
+        submitButton.disabled = false;
+        submitButton.innerText = "Passer la commande";
+      });
+    });
   </script>
 
 </body>
